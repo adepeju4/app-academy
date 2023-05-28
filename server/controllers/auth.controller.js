@@ -1,6 +1,5 @@
 import bcrypt from "bcrypt";
 import dotenv from "dotenv";
-import jwt from "jsonwebtoken";
 import { validateRegister, validateLogin } from "../utils/validators.js";
 import { User } from "../models/user.model.js";
 import { generateToken } from "../utils/generateToken.js";
@@ -51,16 +50,21 @@ const AuthController = {
   },
 
   login: async (req, res, next) => {
+    
     const { error } = validateLogin(req.body);
-
+  
     if (error) return next(error.message);
 
     const { email, password } = req.body;
 
-    const user = await User.findOne({ where: { email } });
-    const token = generateToken(user);
+    
 
+    const user = await User.findOne({ where: { email } });
+  
+    
     if (user) {
+      const token = generateToken(user);
+    
       if (bcrypt.compareSync(password, user.password)) {
         res.cookie("token", token, { httpOnly: true, sameSite: true });
         const userData = {

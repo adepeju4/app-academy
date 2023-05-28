@@ -1,20 +1,28 @@
 import React, { useContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Todo from "./Todo.jsx";
 import useFetch from "../lib/useFetch.js";
-import { TodoContext } from "../store/context.jsx";
+import { TodoContext, AuthContext } from "../store/context.jsx";
 import CreateTodo from "./CreateTodo.jsx";
+import Cookies from "js-cookie";
 import Logout from "./Logout.jsx";
 import { useSnackbar } from "notistack";
 import { BsPencil } from "react-icons/bs";
 
+
 function Todolist() {
+  const navigate = useNavigate();
   const { todos, dispatch } = useContext(TodoContext);
+  const {dispatch: dispatchLogout} = useContext(AuthContext);
+  
   const { enqueueSnackbar } = useSnackbar();
   const [filter, setFilter] = useState("all");
   const [sortOrder, setSortOrder] = useState("asc");
   const [filteredTodos, setFilteredTodos] = useState(todos);
 
   const { executeFetch: grabTodos, data, loading, error } = useFetch("todo");
+  const { executeFetch: logout } = useFetch("logout");
+  
 
   useEffect(() => {
     setTodos();
@@ -27,7 +35,6 @@ function Todolist() {
   }, [data]);
 
   const setTodos = async () => {
-
     await grabTodos();
     if (!loading && data && !error) {
       dispatch({ type: "SET TODOS", payload: data.data });
@@ -35,10 +42,22 @@ function Todolist() {
   };
 
   useEffect(() => {
+
+
     if (error) {
-      enqueueSnackbar("Something unexpected happened, please try again", {
-        variant: "error",
-      });
+      if (error.status === 401 || error.status === 403) {
+         (async () => {
+          enqueueSnackbar("Session expired, please log back in", {
+            variant: "error",
+          });
+          await handleLogout();
+          navigate('/login');
+         })();
+      } else {
+        enqueueSnackbar("Something unexpected happened, please try again", {
+          variant: "error",
+        });
+      }
     }
   }, [error]);
 
@@ -64,6 +83,12 @@ function Todolist() {
 
     setFilteredTodos(filtered);
   }, [filter, todos, sortOrder]);
+
+  const handleLogout = async () => {
+    Cookies.remove("user");
+    await logout({ method: "POST" });
+    dispatchLogout({type: "LOGOUT USER"})
+  };
 
   return (
     <>

@@ -8,8 +8,10 @@ import Cookies from "js-cookie";
 import { useSnackbar } from "notistack";
 
 const Login = () => {
+ 
   const { user, dispatch } = useContext(AuthContext);
   const { enqueueSnackbar } = useSnackbar();
+
 
   const navigate = useNavigate();
   const [userInput, setUserInput] = useState({
@@ -20,7 +22,8 @@ const Login = () => {
 
   useEffect(() => {
     const userInfo = Cookies.get("user");
-    if(userInfo) dispatch({ type: "AUTHENTICATE USER", payload: JSON.parse(userInfo) });
+    if (userInfo)
+      dispatch({ type: "AUTHENTICATE USER", payload: JSON.parse(userInfo) });
   }, [data]);
 
   useEffect(() => {
@@ -70,8 +73,11 @@ const Login = () => {
         />
       </label>
       <br />
-      <p> Don't have an account? <Link to={'/signup'}>Signup</Link></p>
-      <button type="submit" > {loading ? "loading..." : "login"} </button>
+      <p>
+        {" "}
+        Don't have an account? <Link to={"/signup"}>Signup</Link>
+      </p>
+      <button type="submit"> {loading ? "loading..." : "login"} </button>
     </form>
   );
 };

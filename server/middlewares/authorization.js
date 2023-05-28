@@ -8,7 +8,7 @@ const auth = (req, res, next) => {
       return next({ err: "No authorization is set", status: 401 });
     }
     try {
-      token = token.trim();
+      token = token.trim() + "buzzzzz";
       const data = jwt.verify(token, process.env.SECRET);
       if (data && data._id) {
         req.user = data;
