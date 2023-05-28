@@ -21,6 +21,14 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api", routes);
 app.use(express.static(path.join(__dirname, '../dist')));
 
+app.get('/signup', (req, res) => {
+  res.sendFile(path.join(__dirname, '../dist/index.html'));
+});
+
+app.get('/login', (req, res) => {
+  res.sendFile(path.join(__dirname, '../dist/index.html'));
+});
+
 
 app.use((req, res) => res.sendStatus(404));
 
