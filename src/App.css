@@ -1,0 +1,192 @@
+.auth--header {
+  height: 40vh;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.5rem;
+  text-transform: capitalize;
+  color: #fff;
+  position: relative;
+}
+
+.auth--main,
+.todo--main {
+  background-color: hsl(0, 0%, 98%);
+  height: 60vh;
+  display: flex;
+  padding: 1rem;
+  align-items: center;
+  flex-flow: column wrap;
+}
+
+.todo--main {
+  height: 70vh;
+  overflow: auto;
+}
+
+.todo--cover{
+    max-width: 45rem;
+}
+
+.add--todo {
+  border-radius: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.actions div:not(:last-child) {
+  margin-right: 1.5rem;
+}
+
+.actions svg {
+  font-size: 1.7rem;
+  cursor: pointer;
+}
+
+.list--heading{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+li {
+  list-style: none;
+}
+
+li:not(:last-child) {
+  border-bottom: 1px solid gray;
+}
+
+li h2 , li input{
+  text-transform: capitalize;
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.list--actions select:first-child{
+    margin-right: .5rem;
+}
+
+.todo--item input, .todo--item textarea, .edit--action button{
+    border: none;
+    outline: none;
+    background-color: inherit;
+}
+
+.edit--action button{
+    cursor: pointer;
+}
+
+li p, li textarea {
+    font-size: 1.1rem;
+    padding: 1.5rem 0;
+    width: 100%;
+    word-wrap: break-word;
+
+  }
+
+  
+
+.todo--item input:focus,.todo--item textarea:focus, .todo--item input:hover, .todo--item textarea:hover {
+    border: none;
+    outline: none;
+}
+
+li .todo--item{
+    display: flex;
+    flex-flow: column wrap;
+}
+
+.todo--header {
+  height: 30vh;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.5rem;
+  text-transform: capitalize;
+  color: #fff;
+  background-color: #000;
+  position: relative;
+}
+
+.login button,
+.signup button {
+  padding: 1rem;
+  cursor: pointer;
+  color: #fff;
+  background-color: #000;
+  outline: none;
+  border: none;
+  transition: all ease-in 0.25s;
+}
+
+.login button:hover,
+.signup button:hover {
+  color: #000;
+  background-color: #fff;
+  transition: all ease-in 0.25s;
+}
+
+.login,
+.signup {
+  padding: 2rem;
+  border-radius: 5px;
+  z-index: 2;
+  height: 40rem;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: space-evenly;
+  background-color: #fff;
+}
+
+.add--todo label,
+.signup label,
+.login label {
+  font-size: 1.5rem;
+}
+
+.add--todo label input,.list--heading input,
+.add--todo label:not(:first-child) textarea,
+.signup label input,
+.login label input {
+  outline: none;
+  padding: 0.5rem 1rem;
+  width: 100%;
+}
+
+.add--todo label:not(:first-child) textarea {
+  height: 10rem;
+}
+
+.logout {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  font-size: 1rem;
+}
+
+.logout button,
+.add--todo button {
+  padding: 0.5rem 2rem;
+  cursor: pointer;
+  border-radius: 0.3rem;
+  border: 1px solid black;
+  background-color: black;
+  color: #fff;
+  transition: all ease-in 0.25s;
+}
+
+.logout button:hover,
+.add--todo button:hover {
+  background-color: #fff;
+  color: #000;
+  transition: all ease-in 0.25s;
+}
