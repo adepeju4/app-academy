@@ -1,9 +1,9 @@
-import react from "react";
-import SignUp from "./components/Signup";
-import Login from "./components/Login";
-import AuthLayout from "./components/AuthLayout";
-import Todolist from "./components/todolist";
-import PrivateRoute from "./components/PrivateRoute";
+import React from "react";
+import SignUp from "./components/Signup.jsx";
+import Login from "./components/Login.jsx";
+import AuthLayout from "./components/AuthLayout.jsx";
+import Todolist from "./components/AllTodos.jsx";
+import PrivateRoute from "./components/PrivateRoute.jsx";
 import { TodoProvider, AuthProvider } from "./store/context";
 import { SnackbarProvider } from "notistack";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";

@@ -1,9 +1,9 @@
 import React, { useContext, useState, useEffect } from "react";
-import Todo from "./Todo";
-import useFetch from "../lib/useFetch";
-import { TodoContext } from "../store/context";
-import CreateTodo from "./createTodo";
-import Logout from "./Logout";
+import Todo from "./Todo.jsx";
+import useFetch from "../lib/useFetch.js";
+import { TodoContext } from "../store/context.jsx";
+import CreateTodo from "./CreateTodo.jsx";
+import Logout from "./Logout.jsx";
 import { useSnackbar } from "notistack";
 import { BsPencil } from "react-icons/bs";
 
@@ -55,6 +55,7 @@ function Todolist() {
       filtered = filtered.filter((todo) => todo.completed === false);
     }
 
+    // sort filtered todos
     filtered = [...filtered].sort((a, b) => {
       const dateA = new Date(a.created_at);
       const dateB = new Date(b.created_at);

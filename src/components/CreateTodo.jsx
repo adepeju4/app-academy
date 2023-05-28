@@ -12,6 +12,8 @@ function CreateTodo() {
   });
   const [decripLength, setDescripLength] = useState(todo.description.length);
 
+  const errorMessage = "Something unexpected happened, please try again."
+
   const {
     executeFetch: callAddTodo,
     loading: addLoading,

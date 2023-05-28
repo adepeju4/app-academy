@@ -1,6 +1,7 @@
 import { TodoContext } from "../store/context";
 import useFetch from "../lib/useFetch";
 import { useSnackbar } from "notistack";
+import PropTypes from 'prop-types';
 import React, { useState, useContext, useEffect } from "react";
 import {
   BsFillTrash2Fill,
@@ -167,5 +168,10 @@ function Todo({ todo }) {
     </li>
   );
 }
+
+
+Todo.propTypes = {
+  todo: PropTypes.node,
+};
 
 export default Todo;

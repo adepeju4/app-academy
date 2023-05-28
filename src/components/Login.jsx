@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import React, { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -69,7 +70,7 @@ const Login = () => {
         />
       </label>
       <br />
-      <p>Don't have an account? <Link to={'/signup'}>Signup</Link></p>
+      <p> Don't have an account? <Link to={'/signup'}>Signup</Link></p>
       <button type="submit" > {loading ? "loading..." : "login"} </button>
     </form>
   );

@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from 'prop-types';
 import ShootingStars from "./ShootingStars";
 
 function AuthLayout({ children }) {
@@ -12,5 +13,11 @@ function AuthLayout({ children }) {
     </>
   );
 }
+
+
+
+AuthLayout.propTypes = {
+  children: PropTypes.node,
+};
 
 export default AuthLayout;
