@@ -2,7 +2,7 @@ import react from "react";
 import SignUp from "./components/Signup";
 import Login from "./components/Login";
 import AuthLayout from "./components/AuthLayout";
-import Todolist from "./components/todolist";
+import Todolist from "./components/Todolist";
 import PrivateRoute from "./components/PrivateRoute";
 import { TodoProvider, AuthProvider } from "./store/context";
 import { SnackbarProvider } from "notistack";
