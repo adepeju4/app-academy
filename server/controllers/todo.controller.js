@@ -2,9 +2,8 @@ import { validateCreateTodo, validateUpdateTodo } from "../utils/validators.js";
 import { Todo } from "../models/todo.model.js";
 
 const TodoController = {
-  getTodos: async (req, res, next) => {
+  getTodos: async (req, res) => {
     const todos = await Todo.findAll({ where: { userId: req.user._id } });
-
     return res.status(200).json({
       status: "success",
       data: todos,

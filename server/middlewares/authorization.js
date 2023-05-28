@@ -2,18 +2,18 @@ import jwt from "jsonwebtoken";
 
 const auth = (req, res, next) => {
   if (req) {
-    const token = req.cookies.token.trim();
+    let token = req.cookies.token;
+
     if (!token) {
       return next({ err: "No authorization is set", status: 401 });
     }
-    
     try {
+      token = token.trim();
       const data = jwt.verify(token, process.env.SECRET);
       if (data && data._id) {
         req.user = data;
         next();
       } else {
-       
         return next({ err: "Token is incorrect", status: 401 });
       }
     } catch (e) {
