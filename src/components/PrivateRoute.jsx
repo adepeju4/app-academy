@@ -31,11 +31,13 @@ function PrivateRoute({ children }) {
 
   useEffect(() => {
     if (error) {
-      if (error.status === 401 || error.status === 403) {
-        (async () => {
+      if (error.status === 401) {
+        if(error.message !== "No authorization is set"){
           enqueueSnackbar("Session expired, please log back in", {
             variant: "error",
           });
+        }
+        (async () => {
           await handleLogout();
           navigate("/login");
         })();

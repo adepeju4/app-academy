@@ -35,7 +35,7 @@ const AuthController = {
           lastName: savedUser.lastName,
           email: savedUser.email,
         };
-        res.cookie("token", token, { httpOnly: true, sameSite: true });
+        res.cookie("TDtoken", token, { httpOnly: true, sameSite: true });
         return res.status(200).json({
           status: "success",
           data: {
@@ -65,7 +65,7 @@ const AuthController = {
       const token = generateToken(user);
     
       if (bcrypt.compareSync(password, user.password)) {
-        res.cookie("token", token, { httpOnly: true, sameSite: true });
+        res.cookie("TDtoken", token, { httpOnly: true, sameSite: true });
         const userData = {
           firstName: user.firstName,
           lastName: user.lastName,
@@ -86,7 +86,7 @@ const AuthController = {
   },
 
   logout: (req, res) => {
-    res.cookie("token", "", { expires: new Date(0), httpOnly: true });
+    res.cookie("TDtoken", "", { expires: new Date(0), httpOnly: true });
     return res.status(200).json({ status: "Logged out" });
   },
 };

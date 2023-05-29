@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 
 const auth = (req, res, next) => {
   if (req) {
-    let token = req.cookies.token;
+    let token = req.cookies.TDtoken;
 
     if (!token) {
       return next({ err: "No authorization is set", status: 401 });
