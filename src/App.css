@@ -65,7 +65,7 @@ li:not(:last-child) {
 
 li h2 , li input{
   text-transform: capitalize;
-  font-size: 2rem;
+  font-size: 1.6rem;
   font-weight: 500;
 }
 

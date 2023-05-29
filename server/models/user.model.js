@@ -28,6 +28,12 @@ export const User = sequelize.define(
     password: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        is: {
+          args: /^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[!@#$%^&*])/,
+          msg: 'The password should contain at least one letter, one number, and one special character',
+        },
+      },
     },
   },
   { timestamps: true, createdAt: "created_at", updatedAt: "updated_at" }
