@@ -1,17 +1,12 @@
 /* eslint-disable react/no-unescaped-entities */
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../store/context";
 import useFetch from "../lib/useFetch";
-import Cookies from "js-cookie";
 import { useSnackbar } from "notistack";
 
 const Login = () => {
- 
-  const { user, dispatch } = useContext(AuthContext);
   const { enqueueSnackbar } = useSnackbar();
-
 
   const navigate = useNavigate();
   const [userInput, setUserInput] = useState({
@@ -21,14 +16,8 @@ const Login = () => {
   const { executeFetch: login, loading, data, error } = useFetch("login");
 
   useEffect(() => {
-    const userInfo = Cookies.get("user");
-    if (userInfo)
-      dispatch({ type: "AUTHENTICATE USER", payload: JSON.parse(userInfo) });
+    if (data) navigate("/");
   }, [data]);
-
-  useEffect(() => {
-    if (user.isAuthenticated) navigate("/");
-  }, [user]);
 
   useEffect(() => {
     if (error) enqueueSnackbar(error.message, { variant: "error" });

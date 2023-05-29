@@ -1,10 +1,10 @@
-import react, { useReducer, useEffect } from "react";
-import useFetch from "../lib/useFetch";
+import React, { useReducer} from "react";
+import Proptypes from 'prop-types';
 import { todoReducer, userReducer } from "./reducer";
-import Cookies from "js-cookie";
 
-export const AuthContext = react.createContext();
-export const TodoContext = react.createContext();
+
+export const AuthContext = React.createContext();
+export const TodoContext = React.createContext();
 
 export const TodoProvider = ({ children }) => {
   const [todos, dispatch] = useReducer(todoReducer, []);
@@ -27,20 +27,18 @@ export const AuthProvider = ({ children }) => {
     user: null,
   });
 
-  useEffect(() => {
-    getUser();
-  }, []);
-
-  const getUser = () => {
-    const data = Cookies.get("user");
-    if (data) {
-      dispatch({ type: "AUTHENTICATE USER", payload: JSON.parse(data) });
-    }
-  };
-
   return (
     <AuthContext.Provider value={{ user, dispatch }}>
       {children}
     </AuthContext.Provider>
   );
+};
+
+
+TodoProvider.propTypes = {
+  children: Proptypes.node,
+};
+
+AuthProvider.propTypes = {
+  children: Proptypes.node,
 };

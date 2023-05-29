@@ -36,7 +36,6 @@ const AuthController = {
           email: savedUser.email,
         };
         res.cookie("token", token, { httpOnly: true, sameSite: true });
-        res.cookie("user", JSON.stringify(userData), { sameSite: true });
         return res.status(200).json({
           status: "success",
           data: {
@@ -72,7 +71,6 @@ const AuthController = {
           lastName: user.lastName,
           email: user.email,
         };
-        res.cookie("user", JSON.stringify(userData), { sameSite: true });
         return res.status(200).json({
           status: "success",
           data: {

@@ -11,6 +11,9 @@ router.get("/ping", (req, res) => {
 router.post("/register", catchAsyncErrors(AuthController.signup));
 router.post("/login", catchAsyncErrors(AuthController.login));
 router.post("/logout", catchAsyncErrors(AuthController.logout));
+router.get("/verify/token", auth, (req, res)=> {
+  return res.status(200).json(req.user);
+});
 
 router.get('/todo', auth, catchAsyncErrors(TodoController.getTodos))
 router.post("/todo", auth, catchAsyncErrors(TodoController.createTodo));

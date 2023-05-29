@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../store/context";
-import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import useFetch from "../lib/useFetch";
 import { useSnackbar } from "notistack";
@@ -33,18 +32,16 @@ const Logout = () => {
   }, [error]);
 
   const handleLogout = async () => {
-    Cookies.remove("user");
     await logout({ method: "POST" });
   };
 
   return (
     <div className="logout">
-     
-        <button onClick={handleLogout}>{loading ? "Logging out..." : "Log Out"}</button>
- 
+      <button onClick={handleLogout}>
+        {loading ? "Logging out..." : "Log Out"}
+      </button>
     </div>
   );
 };
-
 
 export default Logout;

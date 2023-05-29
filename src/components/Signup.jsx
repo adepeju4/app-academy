@@ -1,14 +1,11 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import useFetch from "../lib/useFetch";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../store/context";
 import { useSnackbar } from "notistack";
-import Cookies from "js-cookie";
 
 const SignUp = () => {
   const { enqueueSnackbar } = useSnackbar();
-  const { user, dispatch } = useContext(AuthContext);
 
   const { executeFetch: register, loading, data, error } = useFetch("register");
 
@@ -20,15 +17,9 @@ const SignUp = () => {
     password: "",
   });
 
-  
   useEffect(() => {
-    const userInfo = Cookies.get("user");
-    if(userInfo) dispatch({ type: "AUTHENTICATE USER", payload: JSON.parse(userInfo) });
+    if (data) navigate("/");
   }, [data]);
-
-  useEffect(() => {
-    if (user.isAuthenticated) navigate("/");
-  }, [user]);
 
   useEffect(() => {
     if (error) enqueueSnackbar(error.message, { variant: "error" });
@@ -43,13 +34,11 @@ const SignUp = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
-      await register({
-        method: "POST",
-        body: userInput,
-      });
-  
 
+    await register({
+      method: "POST",
+      body: userInput,
+    });
   };
 
   return (
@@ -98,8 +87,10 @@ const SignUp = () => {
         />
       </label>
       <br />
-      <p>Already have an account? <Link to={'/login'}>Login</Link></p>
-      <button type="submit" >{loading ? "Signing up" : "Sign Up"}</button>
+      <p>
+        Already have an account? <Link to={"/login"}>Login</Link>
+      </p>
+      <button type="submit">{loading ? "Signing up" : "Sign Up"}</button>
     </form>
   );
 };

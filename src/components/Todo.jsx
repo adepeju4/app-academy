@@ -1,7 +1,7 @@
 import { TodoContext } from "../store/context";
 import useFetch from "../lib/useFetch";
 import { useSnackbar } from "notistack";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import React, { useState, useContext, useEffect } from "react";
 import {
   BsFillTrash2Fill,
@@ -169,9 +169,13 @@ function Todo({ todo }) {
   );
 }
 
-
 Todo.propTypes = {
-  todo: PropTypes.node,
+  todo: PropTypes.shape({
+    title: PropTypes.string,
+    description: PropTypes.string,
+    completed: PropTypes.bool,
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  }).isRequired,
 };
 
 export default Todo;

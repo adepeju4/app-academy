@@ -1,28 +1,21 @@
 import React, { useContext, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+
 import Todo from "./Todo.jsx";
 import useFetch from "../lib/useFetch.js";
-import { TodoContext, AuthContext } from "../store/context.jsx";
+import { TodoContext } from "../store/context.jsx";
 import CreateTodo from "./CreateTodo.jsx";
-import Cookies from "js-cookie";
 import Logout from "./Logout.jsx";
-import { useSnackbar } from "notistack";
 import { BsPencil } from "react-icons/bs";
-
+import { useSnackbar } from "notistack";
 
 function Todolist() {
-  const navigate = useNavigate();
   const { todos, dispatch } = useContext(TodoContext);
-  const {dispatch: dispatchLogout} = useContext(AuthContext);
-  
-  const { enqueueSnackbar } = useSnackbar();
   const [filter, setFilter] = useState("all");
   const [sortOrder, setSortOrder] = useState("asc");
   const [filteredTodos, setFilteredTodos] = useState(todos);
+  const { enqueueSnackbar } = useSnackbar();
 
   const { executeFetch: grabTodos, data, loading, error } = useFetch("todo");
-  const { executeFetch: logout } = useFetch("logout");
-  
 
   useEffect(() => {
     setTodos();
@@ -42,22 +35,10 @@ function Todolist() {
   };
 
   useEffect(() => {
-
-
     if (error) {
-      if (error.status === 401 || error.status === 403) {
-         (async () => {
-          enqueueSnackbar("Session expired, please log back in", {
-            variant: "error",
-          });
-          await handleLogout();
-          navigate('/login');
-         })();
-      } else {
-        enqueueSnackbar("Something unexpected happened, please try again", {
-          variant: "error",
-        });
-      }
+      enqueueSnackbar("Something unexpected happened, please try again", {
+        variant: "error",
+      });
     }
   }, [error]);
 
@@ -74,7 +55,7 @@ function Todolist() {
       filtered = filtered.filter((todo) => todo.completed === false);
     }
 
-    // sort filtered todos
+    // sort the filtered todos
     filtered = [...filtered].sort((a, b) => {
       const dateA = new Date(a.created_at);
       const dateB = new Date(b.created_at);
@@ -83,12 +64,6 @@ function Todolist() {
 
     setFilteredTodos(filtered);
   }, [filter, todos, sortOrder]);
-
-  const handleLogout = async () => {
-    Cookies.remove("user");
-    await logout({ method: "POST" });
-    dispatchLogout({type: "LOGOUT USER"})
-  };
 
   return (
     <>

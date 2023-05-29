@@ -1,18 +1,65 @@
-import React, { useContext } from "react";
-import PropTypes from 'prop-types';
+import React, { useContext, useEffect, useState } from "react";
+import PropTypes from "prop-types";
 import { AuthContext } from "../store/context";
-import { Navigate } from "react-router-dom";
+import useFetch from "../lib/useFetch";
+import { useSnackbar } from "notistack";
+import { useNavigate } from "react-router-dom";
 
 function PrivateRoute({ children }) {
-  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const { user, dispatch } = useContext(AuthContext);
+  const { dispatch: dispatchLogout } = useContext(AuthContext);
+  const { executeFetch: logout } = useFetch("logout");
+  const { executeFetch,  error, data } = useFetch("verify/token");
+  const [authenticated, setAuthenticated] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
 
-  return user.isAuthenticated ? children : <Navigate to="/signup" />
+  const handleLogout = async () => {
+    await logout({ method: "POST" });
+    dispatchLogout({ type: "LOGOUT USER" });
+  };
+
+  useEffect(() => {
+    executeFetch();
+  }, []);
+
+  useEffect(() => {
+    if (data) {
+      dispatch({ type: "AUTHENTICATE USER", payload: data });
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (error) {
+      if (error.status === 401 || error.status === 403) {
+        (async () => {
+          enqueueSnackbar("Session expired, please log back in", {
+            variant: "error",
+          });
+          await handleLogout();
+          navigate("/login");
+        })();
+      } else {
+        enqueueSnackbar("Something unexpected happened, please try again", {
+          variant: "error",
+        });
+      }
+      setAuthenticated(false);
+    }
+  }, [error]);
+
+
+  useEffect(() => {
+      if(user && user.isAuthenticated){
+        setAuthenticated(true);
+      }
+  }, [user])
+
+  return !authenticated ? <p>loading...</p> : children;
 }
-
 
 PrivateRoute.propTypes = {
   children: PropTypes.node,
 };
-
 
 export default PrivateRoute;
